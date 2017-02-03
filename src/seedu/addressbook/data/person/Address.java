@@ -50,8 +50,7 @@ public class Address {
         this.unit = new Unit(splitAddress[UNIT_INDEX]);
         this.postalCode = new PostalCode(splitAddress[POSTALCODE_INDEX]);
         
-        this.value = block.getValue() + ADDRESS_SPLIT_REGEX + street.getValue() + ADDRESS_SPLIT_REGEX +
-        		unit.getValue() + ADDRESS_SPLIT_REGEX + postalCode.getValue();
+        this.value = this.toString();
     }
 
     /**
@@ -93,19 +92,23 @@ public class Address {
 
     @Override
     public String toString() {
-        return value;
+        return block.getValue() + ADDRESS_SPLIT_REGEX + street.getValue() + ADDRESS_SPLIT_REGEX +
+        		unit.getValue() + ADDRESS_SPLIT_REGEX + postalCode.getValue();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Address // instanceof handles nulls
-                && this.value.equals(((Address) other).value)); // state check
+                && this.block.getValue() == ((Address) other).getBlock()
+                && this.street.getValue() == ((Address) other).getStreet()
+                && this.unit.getValue() == ((Address) other).getUnit()
+                && this.postalCode.getValue() == ((Address) other).getPostalCode());
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return this.toString().hashCode();
     }
 
     public boolean isPrivate() {
