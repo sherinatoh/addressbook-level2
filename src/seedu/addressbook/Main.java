@@ -109,10 +109,29 @@ public class Main {
             CommandResult result = command.execute();
             storage.save(addressBook);
             return result;
+            
+        } catch (StorageOperationException e) {
+        	regenerateFile();
+        	ui.showToUser(e.getMessage());
+        	return executeCommand(command);
+        	
         } catch (Exception e) {
             ui.showToUser(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+    
+    /**
+     * Regenerating the file if it is deleted
+     */
+    private void regenerateFile() {
+    	try {
+    		this.storage = new StorageFile();
+    		this.addressBook = storage.load();
+    	} catch (InvalidStorageFilePathException | StorageOperationException e) {
+    		ui.showInitFailedMessage();
+    		throw new RuntimeException(e);
+    	}
     }
 
     /**
