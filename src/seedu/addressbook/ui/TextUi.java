@@ -4,6 +4,7 @@ import static seedu.addressbook.common.Messages.*;
 
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.ui.Formatter;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -37,6 +38,7 @@ public class TextUi {
 
     private final Scanner in;
     private final PrintStream out;
+    private final Formatter formatter;
 
     public TextUi() {
         this(System.in, System.out);
@@ -45,6 +47,7 @@ public class TextUi {
     public TextUi(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
+        this.formatter = new Formatter(out);
     }
 
     /**

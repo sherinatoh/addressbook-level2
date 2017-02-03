@@ -16,6 +16,11 @@ public class Address {
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses entered in following format a/BLOCK, STREET, UNIT, POSTAL_CODE";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
     public static final String ADDRESS_SPLIT_REGEX = ", ";
+    
+    public static final int BLOCK_INDEX = 0;
+    public static final int STREET_INDEX = 1;
+    public static final int UNIT_INDEX = 2;
+    public static final int POSTALCODE_INDEX = 3;
 
     public final String value;
     private boolean isPrivate;
@@ -40,10 +45,10 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         
-        this.block = new Block(splitAddress[0]);
-        this.street = new Street(splitAddress[1]);
-        this.unit = new Unit(splitAddress[2]);
-        this.postalCode = new PostalCode(splitAddress[3]);
+        this.block = new Block(splitAddress[BLOCK_INDEX]);
+        this.street = new Street(splitAddress[STREET_INDEX]);
+        this.unit = new Unit(splitAddress[UNIT_INDEX]);
+        this.postalCode = new PostalCode(splitAddress[POSTALCODE_INDEX]);
         
         this.value = block.getValue() + ADDRESS_SPLIT_REGEX + street.getValue() + ADDRESS_SPLIT_REGEX +
         		unit.getValue() + ADDRESS_SPLIT_REGEX + postalCode.getValue();
